@@ -1,4 +1,4 @@
-use std::fs::read_to_string;
+use std::{collections::HashSet, fs::read_to_string};
 
 pub fn day01() {
     let file = read_to_string("src/data/day01.tsv").expect("Unable to open file");
@@ -30,4 +30,15 @@ pub fn day01() {
         .sum();
 
     println!("The total distance of all pairs is {}", result);
+
+    let unique_vec1: HashSet<i32> = vec1.clone().into_iter().collect();
+    let mut running_sum = 0;
+
+    for i in vec2 {
+        if unique_vec1.contains(&i) {
+            running_sum += i;
+        }
+    }
+
+    println!("The running sum is {}", running_sum);
 }
