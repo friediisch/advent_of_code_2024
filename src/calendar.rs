@@ -42,3 +42,24 @@ pub fn day01() {
 
     println!("The running sum is {}", running_sum);
 }
+
+pub fn day02() {
+    let file = read_to_string("src/data/day02.tsv").expect("Unable to open file");
+
+    let mut safe_report_count = 0;
+    for line in file.lines() {
+        let report_iter = line.split_whitespace();
+        let report: Vec<i32> = report_iter
+            .map(|s| s.parse().expect("Unable to parse number"))
+            .collect();
+
+        if !(report.iter().is_sorted_by(|a, b| a < b) || report.iter().is_sorted_by(|a, b| a > b)) {
+            continue;
+        }
+        if report.windows(2).any(|pair| (pair[1] - pair[0]).abs() > 3) {
+            continue;
+        }
+        safe_report_count += 1
+    }
+    println!("Number of safe reports: {}", safe_report_count);
+}
