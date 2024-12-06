@@ -53,16 +53,16 @@ fn mulling_it_over(memory: &String) -> u64 {
 }
 
 pub fn day03() {
-    println!("Day 3:");
+    print!(".---': ~ '(~), ~|        | >@>O< o-_/.()__------|  ");
     let file = read_to_string("src/data/day03.txt").expect("Unable to open file");
 
     let _conditional_product = AtomicU64::new(0);
     let memory = file.lines().collect::<Vec<_>>().concat();
     let product = mulling_it_over(&memory);
-    println!("Full multiplication result: {:?}", product);
+    print!("full multiplication result: {:?}, ", product);
     let enabled_memory = find_enabled_memory(&memory);
     let product = mulling_it_over(&enabled_memory);
-    println!("Only enabled memory multiplication result: {:?}", product);
+    println!("only enabled memory multiplication result: {:?}", product);
 }
 
 #[cfg(test)]

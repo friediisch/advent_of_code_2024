@@ -29,7 +29,7 @@ fn check_report_safety(report: &Vec<i32>) -> bool {
 }
 
 pub fn day02() {
-    println!("Day 2:");
+    print!("    .--'~  ,* ~ |        |  >o<   \\_\\_\\|_/__/   |  ");
     let file = read_to_string("src/data/day02.tsv").expect("Unable to open file");
 
     let safe_report_count_without_problem_dampener = AtomicU64::new(0);
@@ -51,12 +51,12 @@ pub fn day02() {
                 }
             }
         });
-    println!(
-        "Safe reports without problem dampener: {:?}",
+    print!(
+        "safe reports: {:?}, ",
         safe_report_count_without_problem_dampener
     );
     println!(
-        "Safe reports with problem dampener: {:?}",
+        "safe reports with problem dampener: {:?}",
         safe_report_count_with_problem_dampener
     );
 }

@@ -32,7 +32,7 @@ fn calculate_similarity(vec1: &Vec<i32>, vec2: &Vec<i32>) -> i32 {
 }
 
 pub fn day01() {
-    println!("Day 1:");
+    print!("       .--'~ ~ ~|        .-' *       \\  /     '-.  ");
     let file = read_to_string("src/data/day01.tsv").expect("Unable to open file");
     let mut vec1: Vec<i32> = Vec::new();
     let mut vec2: Vec<i32> = Vec::new();
@@ -55,11 +55,11 @@ pub fn day01() {
 
     let distance = calculate_distance(&vec1, &vec2);
 
-    println!("The distance of all location pairs is {}", distance);
+    print!("location pair distance: {}, ", distance);
 
     let similarity = calculate_similarity(&vec1, &vec2);
 
-    println!("The similarity is {}", similarity);
+    println!("similarity: {}", similarity);
 }
 
 #[cfg(test)]
