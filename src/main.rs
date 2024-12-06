@@ -1,8 +1,8 @@
-use advent_of_code_2024::calendar::*;
+mod calendar;
 
 fn main() {
-    day01();
-    day02();
-
+    calendar::day01();
+    calendar::day02();
+    calendar::day03();
     println!("Done!");
 }
