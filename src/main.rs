@@ -6,4 +6,5 @@ fn main() {
     calendar::day03();
     calendar::day04();
     calendar::day05();
+    calendar::day06();
 }
