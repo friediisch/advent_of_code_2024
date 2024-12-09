@@ -1,5 +1,6 @@
 use rayon::prelude::*;
 use std::sync::{Arc, Mutex};
+use std::time::Instant;
 use std::{
     collections::HashSet,
     fs::read_to_string,
@@ -176,10 +177,12 @@ pub fn day06() {
     let file = read_to_string("src/data/day06.txt").expect("Unable to open file");
     let map: Vec<Vec<char>> = file.lines().map(|line| line.chars().collect()).collect();
     print!("Visited fields: {}, ", sum_visited_fields(&map));
+    let start = Instant::now();
     let number_of_obstacle_locations = get_number_of_looping_obstacle_locations(&map);
+    let duration = start.elapsed();
     println!(
-        "# of possible obstacle locations: {}",
-        number_of_obstacle_locations
+        "{} possible obstacle locations found in {:?}ms", // release time on M2 Mac: ~275ms
+        number_of_obstacle_locations, duration
     );
 }
 
