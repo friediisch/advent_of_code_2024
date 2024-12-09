@@ -52,7 +52,7 @@ pub fn day02() {
             }
         });
     print!(
-        "safe reports: {:?}, ",
+        "Safe reports: {:?}, ",
         safe_report_count_without_problem_dampener
     );
     println!(

@@ -55,7 +55,7 @@ pub fn day01() {
 
     let distance = calculate_distance(&vec1, &vec2);
 
-    print!("location pair distance: {}, ", distance);
+    print!("Location pair distance: {}, ", distance);
 
     let similarity = calculate_similarity(&vec1, &vec2);
 

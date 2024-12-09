@@ -59,7 +59,7 @@ pub fn day03() {
     let _conditional_product = AtomicU64::new(0);
     let memory = file.lines().collect::<Vec<_>>().concat();
     let product = mulling_it_over(&memory);
-    print!("full result: {:?}, ", product);
+    print!("Full result: {:?}, ", product);
     let enabled_memory = find_enabled_memory(&memory);
     let product = mulling_it_over(&enabled_memory);
     println!("only enabled memory result: {:?}", product);
