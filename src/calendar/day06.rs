@@ -125,7 +125,7 @@ fn sum_visited_fields(map: &Vec<Vec<char>>) -> u64 {
 /// determine if the guard is in a loop by checking whether the guard
 /// - leaves the map eventually
 /// - returns to the same position with the same direction at any point
-fn is_looping(map: &Vec<Vec<char>>) -> bool {
+fn is_looping(map: &Vec<Vec<char>>, obstacle_position: (usize, usize)) -> bool {
     let (mut row_idx, mut col_idx, mut direction) = get_guard_state(&map);
     let mut visited_positions_directions: HashSet<(i32, i32, Direction)> = HashSet::new();
     loop {
@@ -139,7 +139,7 @@ fn is_looping(map: &Vec<Vec<char>>) -> bool {
 
         if let Some(row) = map.get(new_row_idx) {
             if let Some(&cell) = row.get(new_col_idx) {
-                if cell == '#' {
+                if cell == '#' || obstacle_position == (new_row_idx, new_col_idx) {
                     direction.turn();
                 } else {
                     row_idx += row_move;
@@ -161,9 +161,7 @@ fn get_number_of_looping_obstacle_locations(map: &Vec<Vec<char>>) -> u64 {
         row.par_iter().enumerate().for_each(|(col_idx, &c)| {
             if c == 'X' && !(row_idx == guard_row_idx as usize && col_idx == guard_col_idx as usize)
             {
-                let mut map_permutation = map.clone();
-                map_permutation[row_idx][col_idx] = '#';
-                if is_looping(&map_permutation) {
+                if is_looping(&map, (row_idx, col_idx)) {
                     obstacle_location_count.fetch_add(1, Ordering::Relaxed);
                 }
             }
