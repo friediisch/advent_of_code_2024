@@ -1,8 +1,9 @@
 use rayon::prelude::*;
+use std::sync::{Arc, Mutex};
 use std::{
     collections::HashSet,
     fs::read_to_string,
-    sync::atomic::{AtomicU64, Ordering},
+    sync::atomic::{AtomicBool, AtomicU64, AtomicUsize, Ordering},
 };
 
 #[derive(PartialEq, Eq, Hash, Clone, Copy)]
@@ -57,15 +58,30 @@ impl From<char> for Direction {
 }
 
 fn get_guard_state(map: &Vec<Vec<char>>) -> (i32, i32, Direction) {
-    for (row_idx, row) in map.iter().enumerate() {
-        for (col_idx, &cell) in row.iter().enumerate() {
-            match cell {
-                '^' | '>' | 'v' | '<' => return (row_idx as i32, col_idx as i32, cell.into()),
-                _ => continue,
+    let stop = AtomicBool::new(false);
+    let a_row_idx = AtomicUsize::new(0);
+    let a_col_idx = AtomicUsize::new(0);
+    let direction = Arc::new(Mutex::new('X'));
+    map.par_iter().enumerate().for_each(|(row_idx, row)| {
+        row.par_iter().enumerate().for_each(|(col_idx, &cell)| {
+            if stop.load(Ordering::Relaxed) {
+                return;
             }
-        }
-    }
-    panic!("No guard found in map")
+            if "^>v<".contains(cell) {
+                stop.store(true, Ordering::Relaxed);
+                a_row_idx.store(row_idx, Ordering::Relaxed);
+                a_col_idx.store(col_idx, Ordering::Relaxed);
+                let mut direction_ref = direction.lock().unwrap();
+                *direction_ref = cell;
+            }
+        })
+    });
+    let guard_direction = *direction.lock().unwrap();
+    (
+        a_row_idx.load(Ordering::Relaxed) as i32,
+        a_col_idx.load(Ordering::Relaxed) as i32,
+        Direction::from(guard_direction),
+    )
 }
 
 fn note_visited_fields(map: &mut Vec<Vec<char>>) -> Vec<Vec<char>> {
