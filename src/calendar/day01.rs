@@ -32,7 +32,7 @@ fn calculate_similarity(vec1: &Vec<i32>, vec2: &Vec<i32>) -> i32 {
 }
 
 pub fn day01() {
-    print!("       .--'~ ~ ~|        .-' *       \\  /     '-.  ");
+    print!("       .--'~ ~ ~|        .-' *       \\  /     '-.  1: ");
     let file = read_to_string("src/data/day01.tsv").expect("Unable to open file");
     let mut vec1: Vec<i32> = Vec::new();
     let mut vec2: Vec<i32> = Vec::new();
@@ -66,17 +66,19 @@ pub fn day01() {
 mod tests {
     use super::*;
 
+    fn get_input_vectors() -> (Vec<i32>, Vec<i32>) {
+        (vec![3, 4, 2, 1, 3, 3], vec![4, 3, 5, 3, 9, 3])
+    }
+
     #[test]
     fn test_calculate_distance() {
-        let vec1 = vec![3, 4, 2, 1, 3, 3];
-        let vec2 = vec![4, 3, 5, 3, 9, 3];
+        let (vec1, vec2) = get_input_vectors();
         assert_eq!(calculate_distance(&vec1, &vec2), 11);
     }
 
     #[test]
     fn test_calculate_similarity() {
-        let vec1 = vec![3, 4, 2, 1, 3, 3];
-        let vec2 = vec![4, 3, 5, 3, 9, 3];
+        let (vec1, vec2) = get_input_vectors();
         assert_eq!(calculate_similarity(&vec1, &vec2), 31);
     }
 }

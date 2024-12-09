@@ -29,7 +29,7 @@ fn check_report_safety(report: &Vec<i32>) -> bool {
 }
 
 pub fn day02() {
-    print!("    .--'~  ,* ~ |        |  >o<   \\_\\_\\|_/__/   |  ");
+    print!("    .--'~  ,* ~ |        |  >o<   \\_\\_\\|_/__/   |  2: ");
     let file = read_to_string("src/data/day02.tsv").expect("Unable to open file");
 
     let safe_report_count_without_problem_dampener = AtomicU64::new(0);
@@ -65,41 +65,40 @@ pub fn day02() {
 mod tests {
     use super::*;
 
+    fn get_reports() -> Vec<Vec<i32>> {
+        vec![
+            vec![7, 6, 4, 2, 1],
+            vec![1, 2, 7, 8, 9],
+            vec![9, 7, 6, 2, 1],
+            vec![1, 3, 2, 4, 5],
+            vec![8, 6, 4, 4, 1],
+            vec![1, 3, 6, 7, 9],
+        ]
+    }
+
+    fn get_report_validities_without_problem_dampener() -> Vec<bool> {
+        vec![true, false, false, false, false, true]
+    }
+
+    fn get_report_validities_with_problem_dampener() -> Vec<bool> {
+        vec![true, false, false, true, true, true]
+    }
+
     #[test]
     fn test_check_report_safety() {
-        assert_eq!(check_report_safety(&vec![7, 6, 4, 2, 1]), true);
-        assert_eq!(check_report_safety(&vec![1, 2, 7, 8, 9]), false);
-        assert_eq!(check_report_safety(&vec![9, 7, 6, 2, 1]), false);
-        assert_eq!(check_report_safety(&vec![1, 3, 2, 4, 5]), false);
-        assert_eq!(check_report_safety(&vec![8, 6, 4, 4, 1]), false);
-        assert_eq!(check_report_safety(&vec![1, 3, 6, 7, 9]), true);
+        let reports = get_reports();
+        let report_validities = get_report_validities_without_problem_dampener();
+        for (report, validity) in reports.iter().zip(report_validities) {
+            assert_eq!(check_report_safety(&report), validity);
+        }
     }
 
     #[test]
     fn test_check_report_safety_with_problem_dampener() {
-        assert_eq!(
-            check_report_safety_with_problem_dampener(&vec![7, 6, 4, 2, 1]),
-            true
-        );
-        assert_eq!(
-            check_report_safety_with_problem_dampener(&vec![1, 2, 7, 8, 9]),
-            false
-        );
-        assert_eq!(
-            check_report_safety_with_problem_dampener(&vec![9, 7, 6, 2, 1]),
-            false
-        );
-        assert_eq!(
-            check_report_safety_with_problem_dampener(&vec![1, 3, 2, 4, 5]),
-            true
-        );
-        assert_eq!(
-            check_report_safety_with_problem_dampener(&vec![8, 6, 4, 4, 1]),
-            true
-        );
-        assert_eq!(
-            check_report_safety_with_problem_dampener(&vec![1, 3, 6, 7, 9]),
-            true
-        );
+        let reports = get_reports();
+        let report_validities = get_report_validities_with_problem_dampener();
+        for (report, validity) in reports.iter().zip(report_validities) {
+            assert_eq!(check_report_safety_with_problem_dampener(&report), validity);
+        }
     }
 }

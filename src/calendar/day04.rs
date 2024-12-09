@@ -129,7 +129,7 @@ fn count_x_mas_in_grid(grid: &Vec<Vec<char>>) -> u64 {
 }
 
 pub fn day04() {
-    print!(r#"|@..#'. ~ " ' ~ |        |>O>o<@< \____       .'|  "#);
+    print!(r#"|@..#'. ~ " ' ~ |        |>O>o<@< \____       .'|  4: "#);
     let file = read_to_string("src/data/day04.txt").expect("Unable to open file");
 
     let mut grid: Vec<Vec<char>> = vec![];
@@ -149,9 +149,8 @@ pub fn day04() {
 mod tests {
     use super::*;
 
-    #[test]
-    fn test_count_word_in_grid() {
-        let grid = vec![
+    fn get_test_grid() -> Vec<Vec<char>> {
+        vec![
             vec!['M', 'M', 'M', 'S', 'X', 'X', 'M', 'A', 'S', 'M'],
             vec!['M', 'S', 'A', 'M', 'X', 'M', 'S', 'M', 'S', 'A'],
             vec!['A', 'M', 'X', 'S', 'X', 'M', 'A', 'A', 'M', 'M'],
@@ -162,25 +161,19 @@ mod tests {
             vec!['S', 'A', 'X', 'A', 'M', 'A', 'S', 'A', 'A', 'A'],
             vec!['M', 'A', 'M', 'M', 'M', 'X', 'M', 'M', 'M', 'M'],
             vec!['M', 'X', 'M', 'X', 'A', 'X', 'M', 'A', 'S', 'X'],
-        ];
+        ]
+    }
+
+    #[test]
+    fn test_count_word_in_grid() {
+        let grid = get_test_grid();
         let count = count_word_in_grid(&grid, "XMAS");
         assert_eq!(count, 18);
     }
 
     #[test]
     fn test_count_x_mas_in_grid() {
-        let grid = vec![
-            vec!['M', 'M', 'M', 'S', 'X', 'X', 'M', 'A', 'S', 'M'],
-            vec!['M', 'S', 'A', 'M', 'X', 'M', 'S', 'M', 'S', 'A'],
-            vec!['A', 'M', 'X', 'S', 'X', 'M', 'A', 'A', 'M', 'M'],
-            vec!['M', 'S', 'A', 'M', 'A', 'S', 'M', 'S', 'M', 'X'],
-            vec!['X', 'M', 'A', 'S', 'A', 'M', 'X', 'A', 'M', 'M'],
-            vec!['X', 'X', 'A', 'M', 'M', 'X', 'X', 'A', 'M', 'A'],
-            vec!['S', 'M', 'S', 'M', 'S', 'A', 'S', 'X', 'S', 'S'],
-            vec!['S', 'A', 'X', 'A', 'M', 'A', 'S', 'A', 'A', 'A'],
-            vec!['M', 'A', 'M', 'M', 'M', 'X', 'M', 'M', 'M', 'M'],
-            vec!['M', 'X', 'M', 'X', 'A', 'X', 'M', 'A', 'S', 'X'],
-        ];
+        let grid = get_test_grid();
         let count = count_x_mas_in_grid(&grid);
         assert_eq!(count, 9);
     }

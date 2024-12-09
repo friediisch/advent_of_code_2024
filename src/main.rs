@@ -5,4 +5,5 @@ fn main() {
     calendar::day02();
     calendar::day03();
     calendar::day04();
+    calendar::day05();
 }
